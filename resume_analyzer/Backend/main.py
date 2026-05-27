@@ -31,8 +31,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 
-from pipeline import run_pipeline
-from ats_scorer import ATSScorer, extract_text_from_file
+from pipeline import run_pipeline # type: ignore
+from ats_scorer import ATSScorer
+from extractor import extract_text # type: ignore
 from jd_matcher import JDMatcher
 
 

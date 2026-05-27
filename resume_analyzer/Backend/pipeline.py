@@ -9,7 +9,6 @@ import re
 import sys
 import json
 from extractor import extract_text, _clean_text # type: ignore
-
 from section_detector import detect_sections # type: ignore
 from skill_extractor import extract_skills  # type: ignore
 
@@ -50,8 +49,8 @@ def run_pipeline(file_path: str, jd_text: str = "") -> dict:  # type: ignore
 
     if jd_text and jd_text.strip():
         try:
-            from ats_scorer import ATSScorer  # type: ignore
-            from jd_matcher import JDMatcher  # type: ignore
+            from ats_scorer import ATSScorer # type: ignore
+            from jd_matcher import JDMatcher # type: ignore
 
             scorer = ATSScorer()
             ats_result = scorer.score_file(file_path, jd_text.strip())

@@ -10,7 +10,6 @@ import bodyParser from "body-parser";
 import session from "express-session";
 import passport from "passport";
 import authRoutes from "./routes/auth.routes.js";
-import resumeRoutes from "./routes/resume.routes.js";
 import paymentRoutes from "./routes/payment.routes.js";
 import aiResumeRoutes from "./routes/resumeRoutes.js";
 
@@ -43,7 +42,6 @@ app.get("/run", (req, res) => res.send("Backend is running ✅"));
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/resume", resumeRoutes);
 app.use("/api/ai-resume", aiResumeRoutes);
 app.use("/api/payment", paymentRoutes);
 
@@ -57,4 +55,3 @@ connectDatabase()
     console.error("MongoDB connection failed:", err.message);
     process.exit(1);
   });
-
