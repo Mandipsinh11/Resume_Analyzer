@@ -1,0 +1,7 @@
+.logo-box {
+  @apply h-10 flex items-center justify-center opacity-70 hover:opacity-100 transition duration-300;
+}
+
+.logo-svg {
+  @apply h-6 w-auto;
+}

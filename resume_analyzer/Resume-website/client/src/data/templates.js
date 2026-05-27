@@ -1,0 +1,93 @@
+export const templates = [
+  {
+    id: 1,
+    name: "Galaxy",
+    img: "/templates/template1.png",
+    category: "modern",
+  },
+  {
+    id: 2,
+    name: "Eclipse",
+    img: "/templates/template2.png",
+    category: "simple",
+  },
+  {
+    id: 3,
+    name: "Aether",
+    img: "/templates/template3.png",
+    category: "professional",
+  },
+  {
+    id: 4,
+    name: "Solstice",
+    img: "/templates/template4.png",
+    category: "one-column",
+  },
+  {
+    id: 5,
+    name: "Nova",
+    img: "/templates/template5.png",
+    category: "with-photo",
+  },
+  { id: 6, name: "Eon", img: "/templates/template6.png", category: "ats" },
+  {
+    id: 7,
+    name: "Classic",
+    img: "/templates/template7.png",
+    category: "simple",
+  },
+  {
+    id: 8,
+    name: "Corporate",
+    img: "/templates/template8.png",
+    category: "professional",
+  },
+  {
+    id: 9,
+    name: "Corporate",
+    img: "/templates/template8.png",
+    category: "professional",
+  },
+  {
+    id: 10,
+    name: "Corporate",
+    img: "/templates/template8.png",
+    category: "professional",
+  },
+  {
+    id: 11,
+    name: "Corporate",
+    img: "/templates/template8.png",
+    category: "professional",
+  },
+  {
+    id: 12,
+    name: "Corporate",
+    img: "/templates/template8.png",
+    category: "professional",
+  },
+  {
+    id: 13,
+    name: "Corporate",
+    img: "/templates/template8.png",
+    category: "professional",
+  },
+  {
+    id: 14,
+    name: "Corporate",
+    img: "/templates/template8.png",
+    category: "professional",
+  },
+  {
+    id: 15,
+    name: "Corporate",
+    img: "/templates/template8.png",
+    category: "professional",
+  },
+  {
+    id: 16,
+    name: "Corporate",
+    img: "/templates/template8.png",
+    category: "professional",
+  },
+];

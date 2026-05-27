@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Design System — Sapphire & Obsidian */
+:root {
+  --bg:       #07080c;
+  --bg-2:     #0c0e15;
+  --bg-3:     #10121a;
+  --border:   rgba(255,255,255,0.07);
+  --border-2: rgba(255,255,255,0.12);
+  --blue:     #3b82f6;
+  --blue-d:   #2563eb;
+  --blue-glow:rgba(59,130,246,0.15);
+  --gold:     #f59e0b;
+  --gold-d:   #d97706;
+  --gold-glow:rgba(245,158,11,0.12);
+  --text:     #f1f5f9;
+  --text-2:   #94a3b8;
+  --text-3:   #475569;
+}
+
+@keyframes gradient-x {
+  0%,100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 4s ease infinite;
+}
+.animate-float { animation: float 5s ease-in-out infinite; }
+
+body {
+  cursor: none;
+}
+
+
+/* Falling animation */
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0.8;
+  }
+}
+
+.animate-fall {
+  animation: fall linear infinite;
+}

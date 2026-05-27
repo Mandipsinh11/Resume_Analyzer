@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===== Design System — Soft Blue Theme ===== */
+:root {
+  /* Backgrounds */
+  --bg: #eef4ff;           /* main page background: soft blue */
+  --bg-2: #e2ebff;         /* slightly stronger soft blue for sections */
+  --bg-3: #d7e2ff;         /* deeper soft blue for accents/strips */
+
+  /* Borders */
+  --border: rgba(37, 99, 235, 0.12);
+  --border-2: rgba(37, 99, 235, 0.18);
+
+  /* Brand colors */
+  --primary: #2563eb;      /* primary blue */
+  --primary-d: #1d4ed8;    /* darker blue */
+  --primary-glow: rgba(37, 99, 235, 0.12);
+  --secondary: #3b82f6;
+  --accent: #60a5fa;
+
+  /* Text colors */
+  --text: #0f172a;
+  --text-2: #475569;
+  --text-3: #94a3b8;
+
+  /* Glass / card */
+  --glass: rgba(255, 255, 255, 0.94);
+}
+
+/* ===== Animations ===== */
+@keyframes falling {
+  0% {
+    transform: translateY(-15vh) rotate(0deg);
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 0.35;
+  }
+
+  92% {
+    opacity: 0.35;
+  }
+
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(20px);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ===== Utility Classes ===== */
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 24px -1px rgba(15, 23, 42, 0.06);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== Global Hover Polish ===== */
+a,
+button {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+  color: var(--text);
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.15);
+  color: var(--text);
+}
