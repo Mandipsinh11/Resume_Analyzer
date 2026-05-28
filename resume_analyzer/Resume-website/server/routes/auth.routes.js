@@ -126,4 +126,14 @@ router.get("/profile", protect, async (req, res) => {
   res.json(user);
 });
 
+router.get("/users", async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+});
+
+router.get("/delete-users", async (req, res) => {
+  await User.deleteMany({});
+  res.send("All users deleted");
+});
+
 export default router;

@@ -35,12 +35,15 @@ export const signup = async (req, res) => {
       user: userResponse,
     });
   } catch (error) {
-    res.status(500).json({ message: getDatabaseErrorMessage(error), success: false });
+    res
+      .status(500)
+      .json({ message: getDatabaseErrorMessage(error), success: false });
   }
 };
 
 export const login = async (req, res) => {
   try {
+    console.log("BODY:", req.body);
     const { email, username, identifier, password } = req.body;
     const loginId = (identifier || email || username || "").trim();
 
@@ -51,13 +54,15 @@ export const login = async (req, res) => {
     const user = await User.findOne({
       $or: [{ email: loginId }, { name: loginId }],
     });
+    console.log("USER:", user);
     if (!user) {
       return res.status(400).json({ message: "Invalid email or username" });
     }
 
     if (!user.password) {
       return res.status(400).json({
-        message: "This account uses Google or LinkedIn sign-in. Use that option instead.",
+        message:
+          "This account uses Google or LinkedIn sign-in. Use that option instead.",
       });
     }
 

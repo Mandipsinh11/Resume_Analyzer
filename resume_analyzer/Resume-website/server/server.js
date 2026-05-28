@@ -13,7 +13,6 @@ import authRoutes from "./routes/auth.routes.js";
 import paymentRoutes from "./routes/payment.routes.js";
 import aiResumeRoutes from "./routes/resumeRoutes.js";
 import helmet from "helmet";
-import cors from "cors";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
 import dotenv from "dotenv";
@@ -22,19 +21,12 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(
-  cors({
-    origin: [/^http:\/\/localhost:\d+$/],
-    credentials: true,
-  }),
-);
-app.use(express.json());
+// Security
 app.use(helmet());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:3000", "http://localhost:5173"],
     credentials: true,
   }),
 );

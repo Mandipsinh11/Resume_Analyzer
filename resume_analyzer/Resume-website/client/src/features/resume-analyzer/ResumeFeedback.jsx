@@ -16,7 +16,7 @@ import {
   UploadCloud,
   Zap,
   Target,
-  Download
+  Download,
 } from "lucide-react";
 
 // ─────────────────────────────────────────────
@@ -24,19 +24,37 @@ import {
 // ─────────────────────────────────────────────
 const FeedbackBlock = ({ type, title, items, isLocked }) => {
   const configs = {
-    best: { color: "var(--primary)", icon: <CheckCircle2 className="w-5 h-5" />, bg: "var(--primary-glow)" },
-    good: { color: "var(--accent)", icon: <Activity className="w-5 h-5" />, bg: "var(--accent-glow)" },
-    improve: { color: "#f43f5e", icon: <AlertCircle className="w-5 h-5" />, bg: "rgba(244, 63, 94, 0.05)" },
+    best: {
+      color: "var(--primary)",
+      icon: <CheckCircle2 className="w-5 h-5" />,
+      bg: "var(--primary-glow)",
+    },
+    good: {
+      color: "var(--accent)",
+      icon: <Activity className="w-5 h-5" />,
+      bg: "var(--accent-glow)",
+    },
+    improve: {
+      color: "#f43f5e",
+      icon: <AlertCircle className="w-5 h-5" />,
+      bg: "rgba(244, 63, 94, 0.05)",
+    },
   };
 
   const config = configs[type];
 
   return (
     <div className="group bg-[var(--bg-2)] border border-[var(--border)] p-8 rounded-[32px] relative overflow-hidden transition-all duration-500 hover:shadow-xl hover:scale-[1.02]">
-      <div className="absolute top-0 right-0 w-24 h-24 blur-2xl opacity-10 transition-opacity group-hover:opacity-20" style={{ background: config.color }} />
+      <div
+        className="absolute top-0 right-0 w-24 h-24 blur-2xl opacity-10 transition-opacity group-hover:opacity-20"
+        style={{ background: config.color }}
+      />
 
       <div className="flex items-center gap-4 mb-6">
-        <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm" style={{ background: config.bg, color: config.color }}>
+        <div
+          className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm"
+          style={{ background: config.bg, color: config.color }}
+        >
           {config.icon}
         </div>
         <h4 className="text-lg font-black tracking-tight text-[var(--text)]">
@@ -46,8 +64,14 @@ const FeedbackBlock = ({ type, title, items, isLocked }) => {
 
       <ul className="space-y-3">
         {items.map((item, i) => (
-          <li key={i} className={`flex items-start gap-3 text-sm font-medium text-[var(--text-3)] leading-relaxed ${isLocked && i >= 1 ? "blur-[6px] select-none" : ""}`}>
-            <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: config.color }} />
+          <li
+            key={i}
+            className={`flex items-start gap-3 text-sm font-medium text-[var(--text-3)] leading-relaxed ${isLocked && i >= 1 ? "blur-[6px] select-none" : ""}`}
+          >
+            <span
+              className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
+              style={{ background: config.color }}
+            />
             {item}
           </li>
         ))}
@@ -98,8 +122,12 @@ const ScoreRing = ({ score }) => {
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-4xl font-black tracking-tighter text-[var(--text)]">{score}</span>
-        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-3)]">ATS Index</span>
+        <span className="text-4xl font-black tracking-tighter text-[var(--text)]">
+          {score}
+        </span>
+        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--text-3)]">
+          ATS Index
+        </span>
       </div>
     </div>
   );
@@ -119,7 +147,11 @@ const mapNodeAnalysisToFeedback = (analysisData, text, role, jobDesc) => {
       items:
         analysisData.skills?.length > 0
           ? analysisData.skills.slice(0, 5)
-          : ["Relevant experience", "Professional formatting", "Clear structure"],
+          : [
+              "Relevant experience",
+              "Professional formatting",
+              "Clear structure",
+            ],
     },
     good: {
       title: "Identity Verification",
@@ -135,9 +167,15 @@ const mapNodeAnalysisToFeedback = (analysisData, text, role, jobDesc) => {
         improvements.length > 0
           ? improvements.slice(0, 4)
           : [
-              text.length < 500 ? "Low semantic density detected." : `${Math.floor(text.length / 100)} words indexed.`,
-              jobDesc ? "Tune keywords to match the job description." : "Add a job description for sharper matching.",
-              missingKw.length > 0 ? `Missing keywords: ${missingKw.slice(0, 3).join(", ")}` : "Strengthen quantified outcomes in bullets.",
+              text.length < 500
+                ? "Low semantic density detected."
+                : `${Math.floor(text.length / 100)} words indexed.`,
+              jobDesc
+                ? "Tune keywords to match the job description."
+                : "Add a job description for sharper matching.",
+              missingKw.length > 0
+                ? `Missing keywords: ${missingKw.slice(0, 3).join(", ")}`
+                : "Strengthen quantified outcomes in bullets.",
             ],
     },
     templateAnalysis: analysisData.templateAnalysis || {},
@@ -160,7 +198,9 @@ const mapPythonAnalysisToFeedback = (result, role, jobDesc) => {
 
   const ats = result.ats_score;
   const atsNumeric =
-    typeof ats === "number" ? ats : ats?.ats_score ?? (charCount > 500 ? 78 : 65);
+    typeof ats === "number"
+      ? ats
+      : (ats?.ats_score ?? (charCount > 500 ? 78 : 65));
 
   const atsImprovements = Array.isArray(ats?.improvements)
     ? ats.improvements.map((i) => i.suggestion || String(i)).filter(Boolean)
@@ -262,12 +302,18 @@ const ResumeFeedback = () => {
     setStep("analyzing");
 
     requestAnimationFrame(() => {
-      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      resultsRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     });
 
-    const nodeApiUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
+    const nodeApiUrl =
+      import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
     const aiApiUrl = import.meta.env.VITE_AI_API_URL || "http://localhost:5000";
-    const jdCombined = [role.trim(), jobDesc.trim()].filter(Boolean).join("\n\n");
+    const jdCombined = [role.trim(), jobDesc.trim()]
+      .filter(Boolean)
+      .join("\n\n");
 
     try {
       // Prefer Python NLP pipeline when available
@@ -284,29 +330,40 @@ const ResumeFeedback = () => {
         if (pyRes.data?.success !== false && !pyRes.data?.error) {
           const sections = pyRes.data.sections || {};
           setExtractedText(Object.values(sections).join("\n") || "");
-          const mapped = mapPythonAnalysisToFeedback(pyRes.data, role.trim(), jobDesc.trim());
+          const mapped = mapPythonAnalysisToFeedback(
+            pyRes.data,
+            role.trim(),
+            jobDesc.trim(),
+          );
           setFeedback(mapped);
           recordAnalysisHistory(mapped);
           setStep("done");
           return;
         }
       } catch (pyErr) {
-        console.warn("Python analyzer unavailable, using Node API:", pyErr.message);
+        console.warn(
+          "Python analyzer unavailable, using Node API:",
+          pyErr.message,
+        );
       }
 
       // Node: extract text then analyze (with role + JD)
       const uploadForm = new FormData();
       uploadForm.append("file", file);
 
-      const uploadRes = await axios.post(`${nodeApiUrl}/api/ai-resume/upload`, uploadForm, {
-        headers: { "Content-Type": "multipart/form-data" },
-        timeout: 60000,
-      });
+      const uploadRes = await axios.post(
+        `${nodeApiUrl}/api/ai-resume/upload`,
+        uploadForm,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          timeout: 60000,
+        },
+      );
 
       const text = (uploadRes.data.text || "").trim();
       if (!text) {
         throw new Error(
-          "Could not read text from this file. Use a text-based PDF or DOCX (not a scanned image)."
+          "Could not read text from this file. Use a text-based PDF or DOCX (not a scanned image).",
         );
       }
       setExtractedText(text);
@@ -318,11 +375,16 @@ const ResumeFeedback = () => {
           role: role.trim(),
           jobDescription: jobDesc.trim(),
         },
-        { timeout: 120000 }
+        { timeout: 120000 },
       );
 
       const analysisData = analyzeRes.data.data || {};
-      const mapped = mapNodeAnalysisToFeedback(analysisData, text, role.trim(), jobDesc.trim());
+      const mapped = mapNodeAnalysisToFeedback(
+        analysisData,
+        text,
+        role.trim(),
+        jobDesc.trim(),
+      );
       setFeedback(mapped);
       recordAnalysisHistory(mapped);
       setStep("done");
@@ -345,29 +407,27 @@ const ResumeFeedback = () => {
       alert("Please analyze a resume first");
       return;
     }
-    
+
     setDownloadLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const apiUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
+      const apiUrl =
+        import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
       const response = await axios.post(
-        `${apiUrl}/api/resume/generate-report`,
-        {
-          feedbackData: feedback,
-          fileName: file?.name || "resume-report"
-        },
+        `${apiUrl}/api/ai-resume/generate`,
+        feedback,
         {
           headers: { Authorization: `Bearer ${token}` },
-          responseType: 'blob'
-        }
+          responseType: "blob",
+        },
       );
 
       // Create blob download
-      const blob = new Blob([response.data], { 
-        type: response.headers['content-type'] || 'application/pdf' 
+      const blob = new Blob([response.data], {
+        type: response.headers["content-type"] || "application/pdf",
       });
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
       link.download = `resume-analysis-report-${Date.now()}.pdf`;
       document.body.appendChild(link);
@@ -387,12 +447,13 @@ const ResumeFeedback = () => {
       alert("Please analyze a resume first");
       return;
     }
-    
+
     setFixResumeLoading(true);
     setFixNotice(null);
     setError(null);
     try {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
+      const apiUrl =
+        import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
       const response = await axios.post(
         `${apiUrl}/api/ai-resume/fix`,
         {
@@ -400,7 +461,7 @@ const ResumeFeedback = () => {
           role: role.trim() || "not specified",
           jobDescription: jobDesc.trim(),
         },
-        { timeout: 120000 }
+        { timeout: 120000 },
       );
 
       const fixData = response.data.data;
@@ -426,17 +487,20 @@ const ResumeFeedback = () => {
       setFixNotice(
         usedLocal
           ? "Improvements applied in offline mode (Gemini unavailable). See results below."
-          : "Resume improved successfully. See results below."
+          : "Resume improved successfully. See results below.",
       );
       requestAnimationFrame(() => {
-        resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        resultsRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
       });
     } catch (err) {
       console.error("AI Fix failed:", err);
       setError(
         err.response?.data?.error ||
           err.response?.data?.message ||
-          "Failed to fix resume. Ensure the server is running on port 5001."
+          "Failed to fix resume. Ensure the server is running on port 5001.",
       );
     } finally {
       setFixResumeLoading(false);
@@ -461,15 +525,20 @@ const ResumeFeedback = () => {
               <Zap className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-2xl font-black tracking-tight text-[var(--text)]">Mission Parameters</h3>
-              <p className="text-sm font-medium text-[var(--text-3)]">Define the objective for precise neural alignment.</p>
+              <h3 className="text-2xl font-black tracking-tight text-[var(--text)]">
+                Mission Parameters
+              </h3>
+              <p className="text-sm font-medium text-[var(--text-3)]">
+                Define the objective for precise neural alignment.
+              </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-3">
               <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-3)] ml-1 flex items-center gap-2">
-                <Target className="w-3 h-3 text-[var(--primary)]" /> Target Position
+                <Target className="w-3 h-3 text-[var(--primary)]" /> Target
+                Position
               </label>
               <input
                 type="text"
@@ -481,11 +550,12 @@ const ResumeFeedback = () => {
             </div>
             <div className="space-y-3">
               <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-3)] ml-1 flex items-center gap-2">
-                <UploadCloud className="w-3 h-3 text-[var(--primary)]" /> Analysis Payload
+                <UploadCloud className="w-3 h-3 text-[var(--primary)]" />{" "}
+                Analysis Payload
               </label>
               <div
                 onClick={() => fileRef.current?.click()}
-                className={`relative group cursor-pointer w-full bg-[var(--bg)] border-2 border-dashed border-[var(--border)] px-6 py-4 rounded-2xl transition-all hover:border-[var(--primary)] flex items-center justify-between ${file ? 'bg-[var(--primary-glow)]/5 border-[var(--primary)]' : ''}`}
+                className={`relative group cursor-pointer w-full bg-[var(--bg)] border-2 border-dashed border-[var(--border)] px-6 py-4 rounded-2xl transition-all hover:border-[var(--primary)] flex items-center justify-between ${file ? "bg-[var(--primary-glow)]/5 border-[var(--primary)]" : ""}`}
               >
                 <input
                   ref={fileRef}
@@ -500,17 +570,22 @@ const ResumeFeedback = () => {
                     }
                   }}
                 />
-                <span className={`text-sm font-bold ${file ? 'text-[var(--primary)]' : 'text-[var(--text-3)]'}`}>
+                <span
+                  className={`text-sm font-bold ${file ? "text-[var(--primary)]" : "text-[var(--text-3)]"}`}
+                >
                   {file ? file.name : "Select PDF or DOCX"}
                 </span>
-                <ChevronRight className={`w-4 h-4 transition-transform ${file ? 'text-[var(--primary)] rotate-90' : 'text-[var(--text-3)]'}`} />
+                <ChevronRight
+                  className={`w-4 h-4 transition-transform ${file ? "text-[var(--primary)] rotate-90" : "text-[var(--text-3)]"}`}
+                />
               </div>
             </div>
           </div>
 
           <div className="space-y-3">
             <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-3)] ml-1 flex items-center gap-2">
-              <FileText className="w-3 h-3 text-[var(--primary)]" /> Job Context (Recommended)
+              <FileText className="w-3 h-3 text-[var(--primary)]" /> Job Context
+              (Recommended)
             </label>
             <textarea
               className="w-full bg-[var(--bg)] border border-[var(--border)] px-6 py-4 rounded-2xl text-[var(--text)] font-semibold focus:border-[var(--primary)] focus:ring-4 focus:ring-[var(--primary-glow)] transition-all outline-none min-h-[140px] resize-none"
@@ -546,7 +621,9 @@ const ResumeFeedback = () => {
                 Interpreting Data...
               </>
             ) : (
-              <>Initiate Neural Analysis <ChevronRight className="w-4 h-4" /></>
+              <>
+                Initiate Neural Analysis <ChevronRight className="w-4 h-4" />
+              </>
             )}
           </button>
         </div>
@@ -568,8 +645,12 @@ const ResumeFeedback = () => {
               <div className="absolute inset-0 rounded-full border-4 border-t-[var(--primary)] animate-spin" />
             </div>
             <div className="space-y-2">
-              <h3 className="text-2xl font-black tracking-tight text-[var(--text)]">Scanning Semantic Nodes</h3>
-              <p className="text-lg font-medium text-[var(--text-3)]">Correlating your profile with recursive ATS patterns...</p>
+              <h3 className="text-2xl font-black tracking-tight text-[var(--text)]">
+                Scanning Semantic Nodes
+              </h3>
+              <p className="text-lg font-medium text-[var(--text-3)]">
+                Correlating your profile with recursive ATS patterns...
+              </p>
             </div>
           </motion.div>
         )}
@@ -587,16 +668,21 @@ const ResumeFeedback = () => {
                 <div className="inline-block px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-black uppercase tracking-widest mb-4">
                   Report Finalized
                 </div>
-                <h2 className="text-3xl font-black tracking-tight text-[var(--text)] mb-3">{file?.name}</h2>
+                <h2 className="text-3xl font-black tracking-tight text-[var(--text)] mb-3">
+                  {file?.name}
+                </h2>
                 <p className="text-lg font-medium text-[var(--text-3)] leading-relaxed">
-                  Your resume has been processed through our 4th-gen neural matrix. We've identified key optimization nodes to bypass corporate filters.
+                  Your resume has been processed through our 4th-gen neural
+                  matrix. We've identified key optimization nodes to bypass
+                  corporate filters.
                 </p>
               </div>
               <div className="flex gap-4 flex-col md:flex-row">
-                <button 
+                <button
                   onClick={handleDownloadReport}
                   disabled={downloadLoading}
-                  className="px-8 py-4 rounded-xl bg-[var(--bg-2)] border border-[var(--border)] text-[var(--text)] font-black text-xs uppercase tracking-[0.2em] hover:bg-[var(--bg-3)] transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+                  className="px-8 py-4 rounded-xl bg-[var(--bg-2)] border border-[var(--border)] text-[var(--text)] font-black text-xs uppercase tracking-[0.2em] hover:bg-[var(--bg-3)] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                >
                   {downloadLoading ? (
                     <>
                       <div className="w-3 h-3 border-2 border-[var(--text-3)]/30 border-t-[var(--text)] rounded-full animate-spin" />
@@ -609,10 +695,11 @@ const ResumeFeedback = () => {
                     </>
                   )}
                 </button>
-                <button 
+                <button
                   onClick={handleFixResumeWithAI}
                   disabled={fixResumeLoading}
-                  className="px-8 py-4 rounded-xl bg-[var(--primary)] text-white font-black text-xs uppercase tracking-[0.2em] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 shadow-xl shadow-[var(--primary-glow)] flex items-center justify-center gap-2">
+                  className="px-8 py-4 rounded-xl bg-[var(--primary)] text-white font-black text-xs uppercase tracking-[0.2em] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 shadow-xl shadow-[var(--primary-glow)] flex items-center justify-center gap-2"
+                >
                   {fixResumeLoading ? (
                     <>
                       <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -660,61 +747,98 @@ const ResumeFeedback = () => {
                     <CheckCircle2 className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-black tracking-tight text-emerald-900">Resume Optimized!</h3>
-                    <p className="text-sm font-medium text-emerald-700">Your resume has been improved with AI</p>
+                    <h3 className="text-2xl font-black tracking-tight text-emerald-900">
+                      Resume Optimized!
+                    </h3>
+                    <p className="text-sm font-medium text-emerald-700">
+                      Your resume has been improved with AI
+                    </p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                   <div className="bg-white rounded-2xl p-6 border border-emerald-100">
                     <div className="text-center mb-4">
-                      <div className="text-sm font-black uppercase tracking-[0.2em] text-emerald-600 mb-2">Before</div>
-                      <div className="text-4xl font-black text-emerald-900">{fixedResumeData.atsScoreBefore || 'N/A'}</div>
-                      <div className="text-xs text-emerald-600 font-semibold">ATS Score</div>
+                      <div className="text-sm font-black uppercase tracking-[0.2em] text-emerald-600 mb-2">
+                        Before
+                      </div>
+                      <div className="text-4xl font-black text-emerald-900">
+                        {fixedResumeData.atsScoreBefore || "N/A"}
+                      </div>
+                      <div className="text-xs text-emerald-600 font-semibold">
+                        ATS Score
+                      </div>
                     </div>
                   </div>
                   <div className="bg-white rounded-2xl p-6 border border-blue-100">
                     <div className="text-center mb-4">
-                      <div className="text-sm font-black uppercase tracking-[0.2em] text-blue-600 mb-2">After</div>
-                      <div className="text-4xl font-black text-blue-900">{fixedResumeData.atsScoreAfter || 'N/A'}</div>
-                      <div className="text-xs text-blue-600 font-semibold">ATS Score</div>
+                      <div className="text-sm font-black uppercase tracking-[0.2em] text-blue-600 mb-2">
+                        After
+                      </div>
+                      <div className="text-4xl font-black text-blue-900">
+                        {fixedResumeData.atsScoreAfter || "N/A"}
+                      </div>
+                      <div className="text-xs text-blue-600 font-semibold">
+                        ATS Score
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {fixedResumeData.improvements && fixedResumeData.improvements.length > 0 && (
-                  <div className="mb-6">
-                    <h4 className="text-lg font-black text-emerald-900 mb-4 flex items-center gap-2">
-                      <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                      Key Improvements
-                    </h4>
-                    <ul className="space-y-2">
-                      {fixedResumeData.improvements.map((improvement, i) => (
-                        <li key={i} className="flex items-start gap-3 bg-white p-3 rounded-lg border border-emerald-100">
-                          <span className="text-emerald-600 font-bold mt-1">✓</span>
-                          <span className="text-emerald-900 font-medium">{improvement}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {fixedResumeData.improvements &&
+                  fixedResumeData.improvements.length > 0 && (
+                    <div className="mb-6">
+                      <h4 className="text-lg font-black text-emerald-900 mb-4 flex items-center gap-2">
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                        Key Improvements
+                      </h4>
+                      <ul className="space-y-2">
+                        {fixedResumeData.improvements.map((improvement, i) => (
+                          <li
+                            key={i}
+                            className="flex items-start gap-3 bg-white p-3 rounded-lg border border-emerald-100"
+                          >
+                            <span className="text-emerald-600 font-bold mt-1">
+                              ✓
+                            </span>
+                            <span className="text-emerald-900 font-medium">
+                              {improvement}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                 {fixedResumeData.improvedResume && (
                   <div className="mb-6">
-                    <h4 className="text-lg font-black text-emerald-900 mb-4">Improved Resume</h4>
+                    <h4 className="text-lg font-black text-emerald-900 mb-4">
+                      Improved Resume
+                    </h4>
                     <div className="bg-white p-6 rounded-xl border border-emerald-100 max-h-96 overflow-y-auto">
-                      <p className="text-emerald-900 text-sm font-medium whitespace-pre-wrap">{fixedResumeData.improvedResume}</p>
+                      <p className="text-emerald-900 text-sm font-medium whitespace-pre-wrap">
+                        {fixedResumeData.improvedResume}
+                      </p>
                     </div>
                   </div>
                 )}
 
                 <div className="flex gap-4 pt-6 border-t border-emerald-200">
-                  <button 
+                  <button
                     onClick={() => {
-                      const element = document.createElement('a');
-                      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(fixedResumeData.improvedResume || ''));
-                      element.setAttribute('download', `improved-resume-${Date.now()}.txt`);
-                      element.style.display = 'none';
+                      const element = document.createElement("a");
+                      element.setAttribute(
+                        "href",
+                        "data:text/plain;charset=utf-8," +
+                          encodeURIComponent(
+                            fixedResumeData.improvedResume || "",
+                          ),
+                      );
+                      element.setAttribute(
+                        "download",
+                        `improved-resume-${Date.now()}.txt`,
+                      );
+                      element.style.display = "none";
                       document.body.appendChild(element);
                       element.click();
                       document.body.removeChild(element);

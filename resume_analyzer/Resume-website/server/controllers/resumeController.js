@@ -98,9 +98,11 @@ export const generateResume = async (req, res) => {
 
     const pdfBuffer = await resumeService.generateResumePDF(resumeJson);
 
+    const uniqueFileName = `resume-${Date.now()}.pdf`;
+
     res.set({
       "Content-Type": "application/pdf",
-      "Content-Disposition": 'attachment; filename="improved_resume.pdf"',
+      "Content-Disposition": `attachment; filename="${uniqueFileName}"`,
       "Content-Length": pdfBuffer.length,
     });
 
