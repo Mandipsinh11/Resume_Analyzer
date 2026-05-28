@@ -11,27 +11,48 @@ import Settings from "./features/dashboard/pages/Settings";
 import ResumeAnalyzer from "./features/resume-analyzer/ResumeAnalyzer";
 import OAuthCallback from "./features/auth/pages/OAuthCallback";
 import CustomCursor from "./components/CustomCursor";
+import { Helmet } from "react-helmet-async";
 
 function App() {
   return (
     <>
-     <CustomCursor />
-     <div className="relative z-10">
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUpPage />} />
-      <Route path="/dashboard" element={<DashboardPage />} />
-      <Route path="/resume-analyzer" element={<ResumeAnalyzer />} />
-      <Route path="/faq" element={<FAQ />} />
-      <Route path="/templates/all" element={<AllTemplates />} />
-      <Route path="/templates" element={<TemplatesPage />} />
-      <Route path="/templates/:category" element={<TemplatesPage />} />
-      <Route path="/my-resumes" element={<MyResumes />} />
-      <Route path="/settings" element={<Settings />} />
-      <Route path="/oauth-callback" element={<OAuthCallback />} />
-    </Routes>
-    </div>
+      <Helmet>
+        <title>ATSify AI Resume Analyzer</title>
+
+        <meta
+          name="description"
+          content="AI-powered ATS resume analyzer with JD matching and resume scoring."
+        />
+
+        <meta
+          name="keywords"
+          content="ATS Resume Analyzer, AI Resume Checker, Resume Scanner"
+        />
+
+        <meta property="og:title" content="ATSify AI Resume Analyzer" />
+
+        <meta
+          property="og:description"
+          content="AI-powered ATS Resume Analyzer"
+        />
+      </Helmet>
+      <CustomCursor />
+      <div className="relative z-10">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/resume-analyzer" element={<ResumeAnalyzer />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/templates/all" element={<AllTemplates />} />
+          <Route path="/templates" element={<TemplatesPage />} />
+          <Route path="/templates/:category" element={<TemplatesPage />} />
+          <Route path="/my-resumes" element={<MyResumes />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/oauth-callback" element={<OAuthCallback />} />
+        </Routes>
+      </div>
     </>
   );
 }

@@ -29,6 +29,7 @@ from pathlib import Path
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask_talisman import Talisman
 from werkzeug.exceptions import HTTPException
 
 from pipeline import run_pipeline # type: ignore
@@ -37,10 +38,13 @@ from extractor import extract_text # type: ignore
 from jd_matcher import JDMatcher
 
 
+
 # App setup
 
 app = Flask(__name__)
 CORS(app)  # Allow all origins — restrict to your frontend domain in production
+
+Talisman(app, force_https=False)
 
 UPLOAD_FOLDER = Path("uploads")
 UPLOAD_FOLDER.mkdir(exist_ok=True)
@@ -255,6 +259,13 @@ def handle_exception(e):
     # Handle non-HTTP exceptions
     traceback.print_exc()
     return _error(f"Unexpected error: {str(e)}", 500)
+
+@app.route("/")
+def home():
+    return jsonify({
+        "success": True,
+        "message": "Backend secured successfully"
+    }) 
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

@@ -12,6 +12,13 @@ import passport from "passport";
 import authRoutes from "./routes/auth.routes.js";
 import paymentRoutes from "./routes/payment.routes.js";
 import aiResumeRoutes from "./routes/resumeRoutes.js";
+import helmet from "helmet";
+import cors from "cors";
+import rateLimit from "express-rate-limit";
+import compression from "compression";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
@@ -23,6 +30,24 @@ app.use(
   }),
 );
 app.use(express.json());
+app.use(helmet());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
+
+app.use(compression());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Too many requests, please try again later.",
+});
+
+app.use(limiter);
 app.use(bodyParser.json());
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
